@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if books  %}
+{% if user.is_admin %}
+<a href="{% url 'book_new' %}" type="button" class="btn btn-primary">create books</a><br><br>
+{% endif %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if messages %}
+
+{% endif %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Rating</th>
+            {% if user.is_admin %}
+            <th> </th>
+            <th> </th>
+            <th> </th>
+            {% endif %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{book.book}}</td>
+            <td>{{book.rating}}</td>
+            {% if user.is_admin %}
+            <td>
+                <a name="rate" href="{% url 'rate' book.id %}" type="button" class="btn btn-info">Add Rating</a>
+            </td>
+            <td>
+                <a href="{% url 'book_update' book.id %}" type="button" class="btn btn-success">Update</a>
+            </td>
+            <td>
+                <a href="{% url 'book_delete' book.id %}" type="button" class="btn btn-danger">Delete</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<h2>No books </h2>
+{% endif %}
+{% endblock %}
