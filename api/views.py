@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView
 # from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from api.forms import UserSignUpForm, AdminSignUpForm, BookForm
-from api.models import Users, NormalUSer, Books
+from api.models import Users, Books
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
@@ -12,6 +12,8 @@ from .decorators import admin_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
+from rest_framework import generics
+from .serializers import UsersSerializers, BooksSerializers
 # Create your views here.
 
 
@@ -109,3 +111,36 @@ def book_delete(request, book_id, template_name='books/book_delete.html'):
         book.delete()
         return redirect('book_list')
     return render(request, template_name, {'object': book})
+
+class BookCreateView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Books.objects.all()
+    serializer_class = BooksSerializers
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new Book."""
+        serializer.save()
+
+class UserCreateView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = Users.objects.all()
+    serializer_class = UsersSerializers
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new Book."""
+        # serializer.save()
+        instance = serializer.save()
+        instance.set_password(instance.password)
+        instance.save()
+
+class UserDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+
+    queryset = Users.objects.all()
+    serializer_class = UsersSerializers
+
+class BookDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This class handles the http GET, PUT and DELETE requests."""
+
+    queryset = Books.objects.all()
+    serializer_class = BooksSerializers

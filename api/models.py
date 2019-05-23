@@ -9,9 +9,9 @@ class Users(AbstractUser):
     is_users = models.BooleanField(default=False)
 
 
-class NormalUSer(models.Model):
-    users = models.OneToOneField(
-        Users, on_delete=models.CASCADE, primary_key=True)
+# class NormalUSer(models.Model):
+#     users = models.OneToOneField(
+#         Users, on_delete=models.CASCADE, primary_key=True)
 
 
 class Books(models.Model):

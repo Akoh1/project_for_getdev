@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.forms import ModelForm
-from api.models import Users, NormalUSer, Books
+from api.models import Users, Books
 
 
 class UserSignUpForm(UserCreationForm):
