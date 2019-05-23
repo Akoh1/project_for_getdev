@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if books  %}
 {% if user.is_admin %}
 <a href="{% url 'book_new' %}" type="button" class="btn btn-primary">create books</a><br><br>
 {% endif %}
+{% if books  %}
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 {% if messages %}
