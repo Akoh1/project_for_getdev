@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from api import views
+from rest_framework.documentation import include_docs_urls
+from rest_framework_swagger.views import get_swagger_view
+
+schema_view = get_swagger_view(title="GetDev API Docs")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +30,5 @@ urlpatterns = [
     path('accounts/signup/user', views.UserSignUpView.as_view(), name='user_signup'),
     path('accounts/signup/admin',
          views.AdminSignUpView.as_view(), name='admin_signup'),
+    path('docs/', schema_view)
 ]

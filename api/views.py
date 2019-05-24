@@ -113,7 +113,14 @@ def book_delete(request, book_id, template_name='books/book_delete.html'):
     return render(request, template_name, {'object': book})
 
 class BookCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of our rest api."""
+    """
+    This class defines the create behavior of our rest api.
+    get:
+    Return a list of all the existing books.
+
+    post:
+    Create a new books instance.
+    """
     queryset = Books.objects.all()
     serializer_class = BooksSerializers
 
@@ -122,7 +129,15 @@ class BookCreateView(generics.ListCreateAPIView):
         serializer.save()
 
 class UserCreateView(generics.ListCreateAPIView):
-    """This class defines the create behavior of our rest api."""
+    """
+    This class defines the create behavior of our rest api.
+
+    get:
+    Return a list of all the existing users.
+
+    post:
+    Create a new user instance.
+    """
     queryset = Users.objects.all()
     serializer_class = UsersSerializers
 
@@ -134,13 +149,35 @@ class UserCreateView(generics.ListCreateAPIView):
         instance.save()
 
 class UserDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests."""
+    """
+    This class handles the http GET, PUT and DELETE requests.
+
+    get:
+    Return a list of all the existing users.
+
+    put:
+    Update a user instance.
+
+    delete:
+    Deletes a user instance.
+    """
 
     queryset = Users.objects.all()
     serializer_class = UsersSerializers
 
 class BookDetailsView(generics.RetrieveUpdateDestroyAPIView):
-    """This class handles the http GET, PUT and DELETE requests."""
+    """
+    This class handles the http GET, PUT and DELETE requests.
+
+    get:
+    Return a list of all the existing books.
+
+    put:
+    Update a book instance.
+
+    delete:
+    Deletes a book instance.
+    """
 
     queryset = Books.objects.all()
     serializer_class = BooksSerializers
